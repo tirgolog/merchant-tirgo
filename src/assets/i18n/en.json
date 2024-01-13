@@ -1,0 +1,19 @@
+{
+    "control_panel": "Control Panel",
+    "adminstration": "Administrators",
+    "secure_transaction": "Secure transaction",
+    "clients": "Clients",
+    "drivers": "Drivers",
+    "archived_users": "Archived users",
+    "orders": "Orders",
+    "tracking": "Tracking",
+    "directories": "Directories",
+    "user_roles": "User Roles",
+    "subscription_types": "Subscription Types",
+    "transport": "Transport",
+    "user_activity": "User activity",
+    "chat": "Chat",
+    "activity": "Faoliyat",
+    "verification": "Tekshirish",
+    "agents": "Agentlar"
+}

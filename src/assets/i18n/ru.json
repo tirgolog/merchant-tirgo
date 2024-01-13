@@ -1,0 +1,19 @@
+{
+    "control_panel": "Панель управления",
+    "adminstration": "Администраторы",
+    "secure_transaction": "Безопасная сделка",
+    "clients": "Клиенты",
+    "drivers": "Водители",
+    "archived_users": "Архивные пользователи",
+    "orders": "Заказы",
+    "tracking": "Трекинг",
+    "directories": "Справочники",
+    "user_roles": "Роли пользователей",
+    "subscription_types": "Типы подписки",
+    "transport": "Транспорт",
+    "user_activity": "Активность пользователей",
+    "chat": "Чат",
+    "activity": "Активность",
+    "verification": "Верификация",
+    "agents": "Агенты"
+}

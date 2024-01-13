@@ -1,0 +1,19 @@
+{
+    "control_panel": "Boshqaruv paneli",
+    "adminstration": "Administratorlar",
+    "secure_transaction": "Xavfsiz tranzaksiya",
+    "clients": "Mijozlar",
+    "drivers": "Haydovchilar",
+    "archived_users": "Arxivlangan foydalanuvchilar",
+    "orders": "Buyurtmalar",
+    "tracking": "Kuzatuv",
+    "directories": "Kataloglar",
+    "user_roles": "User Roles",
+    "subscription_types": "Foydalanuvchi rollari",
+    "transport": "Transport",
+    "user_activity": "Foydalanuvchi faoliyati",
+    "chat": "Chat",
+    "activity": "Activity",
+    "verification": "Verification",
+    "agents": "Agents"
+}

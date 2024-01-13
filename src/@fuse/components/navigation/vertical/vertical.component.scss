@@ -1,0 +1,11 @@
+@use 'styles/appearances/default';
+@use 'styles/appearances/compact';
+@use 'styles/appearances/dense';
+@use 'styles/appearances/thin';
+.background-navigation {
+    background-color: #FBFAFB !important;
+}
+
+.background-navigation-dark {
+    background-color: #0f172a !important;
+}
