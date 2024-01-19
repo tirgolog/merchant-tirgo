@@ -9,8 +9,8 @@ export class AuthService {
   public _authenticated: boolean = false;
 
   constructor(
-    private _httpClient: HttpClient,
-    private _userService: UserService,
+    private http: HttpClient,
+    private userService: UserService,
   ) {
   }
 
@@ -23,11 +23,11 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this._httpClient.post('api/auth/forgot-password', email);
+    return this.http.post('api/auth/forgot-password', email);
   }
 
   resetPassword(password: string): Observable<any> {
-    return this._httpClient.post('api/auth/reset-password', password);
+    return this.http.post('api/auth/reset-password', password);
   }
 
   signIn(credentials: { email: string; password: string }): Observable<any> {
@@ -36,7 +36,7 @@ export class AuthService {
       return throwError('User is already logged in.');
     }
 
-    return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+    return this.http.post('api/auth/sign-in', credentials).pipe(
       switchMap((response: any) => {
         // Store the access token in the local storage
         this.accessToken = response.accessToken;
@@ -45,7 +45,7 @@ export class AuthService {
         this._authenticated = true;
 
         // Store the user on the user service
-        this._userService.user = response.user;
+        this.userService.user = response.user;
 
         // Return a new observable with the response
         return of(response);
@@ -58,7 +58,7 @@ export class AuthService {
    */
   signInUsingToken(): Observable<any> {
     // Sign in using the token
-    return this._httpClient.post('api/auth/sign-in-with-token', {
+    return this.http.post('api/auth/sign-in-with-token', {
       accessToken: this.accessToken,
     }).pipe(
       catchError(() =>
@@ -82,7 +82,7 @@ export class AuthService {
         this._authenticated = true;
 
         // Store the user on the user service
-        this._userService.user = response.user;
+        this.userService.user = response.user;
 
         // Return true
         return of(true);
@@ -110,7 +110,7 @@ export class AuthService {
    * @param user
    */
   signUp(user: { name: string; email: string; password: string; company: string }): Observable<any> {
-    return this._httpClient.post('api/auth/sign-up', user);
+    return this.http.post('api/auth/sign-up', user);
   }
 
   /**
@@ -119,7 +119,7 @@ export class AuthService {
    * @param credentials
    */
   unlockSession(credentials: { email: string; password: string }): Observable<any> {
-    return this._httpClient.post('api/auth/unlock-session', credentials);
+    return this.http.post('api/auth/unlock-session', credentials);
   }
 
   /**

@@ -6,7 +6,7 @@
                 АВТОРИЗАЦИЯ</div>
             <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <mat-form-field class="w-full">
-                    <mat-label>Логин</mat-label>
+                    <mat-label>Электронный адрес</mat-label>
                     <input id="email" matInput [formControlName]="'email'">
                     <mat-error *ngIf="signInForm.get('email').hasError('required')">
                         Требуется адрес электронной почты
@@ -30,6 +30,11 @@
                         Требуется пароль
                     </mat-error>
                 </mat-form-field>
+                <div class="inline-flex items-center justify-between w-full mt-1.5">
+                    <a class="text-md font-medium text-dark ml-auto"
+                        [routerLink]="['/forgot-password']">Забыли пароль?
+                    </a>
+                </div>
                 <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
                     [disabled]="signInForm.disabled" (click)="signIn()">
                     <span *ngIf="!signInForm.disabled">
@@ -38,6 +43,11 @@
                     <mat-progress-spinner *ngIf="signInForm.disabled" [diameter]="24"
                         [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>
+                <div class="inline-flex items-center justify-between w-full mt-8">
+                    <a class="text-md font-medium text-[#b5b5b5] m-auto"
+                        [routerLink]="['/auth/sign-up']">Регистрация
+                    </a>
+                </div>
             </form>
         </div>
     </div>
