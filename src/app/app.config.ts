@@ -11,9 +11,12 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { provideTransloco } from 'app/core/transloco/transloco.provider';
 import { mockApiServices } from './core/mock-api';
 import { provideToastr } from 'ngx-toastr';
+import { CodeInputModule } from 'angular-code-input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        ReactiveFormsModule,
         provideAnimations(),
         provideHttpClient(),
         provideToastr({

@@ -68,7 +68,9 @@ export class AuthVerifyPhoneComponent implements OnInit {
   showVerifyCode(data) {
     const dialogRef = this.dialog.open(VerificationCodeComponent, {
       autoFocus: false,
+      disableClose: true ,
       data: {
+        countryCode: this.phone.selectedCountry.iso2,
         phone: this.verifyPhoneForm.value.phone,
         code: '000000' //data.code
       }
