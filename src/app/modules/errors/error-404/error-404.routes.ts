@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { Error404Component } from 'app/shared/components/error-404/error-404.component';
+import { Error404Component } from 'app/modules/errors/error-404/error-404.component';
 
 export default [
     {

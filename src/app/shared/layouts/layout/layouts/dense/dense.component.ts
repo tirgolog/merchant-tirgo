@@ -8,14 +8,14 @@ import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { FuseConfig, FuseConfigService, Scheme } from '@fuse/services/config';
 import { FuseMediaWatcherService } from '@fuse/services/media-watcher';
-import { AuthService } from 'app/core/auth/auth.service';
+import { AuthService } from 'app/modules/auth/auth.service';
 import { NavigationService } from 'app/core/navigation/navigation.service';
 import { Navigation } from 'app/core/navigation/navigation.types';
-import { LanguagesComponent } from 'app/shared/components/common/languages/languages.component';
-import { MessagesComponent } from 'app/shared/components/common/messages/messages.component';
-import { NotificationsComponent } from 'app/shared/components/common/notifications/notifications.component';
-import { SearchComponent } from 'app/shared/components/common/search/search.component';
-import { UserComponent } from 'app/shared/components/common/user/user.component';
+import { LanguagesComponent } from 'app/shared/layouts/languages/languages.component';
+import { MessagesComponent } from 'app/shared/layouts/messages/messages.component';
+import { NotificationsComponent } from 'app/shared/layouts/notifications/notifications.component';
+import { SearchComponent } from 'app/shared/layouts/search/search.component';
+import { UserComponent } from 'app/shared/layouts/user/user.component';
 
 import { Subject, takeUntil } from 'rxjs';
 

@@ -1,0 +1,17 @@
+.login-contianer {
+    width: 485px;
+    flex-shrink: 0;
+  
+    .login-card {
+      background: #E8E8E8;
+      border-radius: 30px;
+    }
+  }
+  
+  .country-selector {
+    opacity: 1 !important;
+  }
+  
+  ngx-mat-intl-tel-input div button {
+    margin: 4px 0;
+  }

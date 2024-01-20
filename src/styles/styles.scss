@@ -3,3 +3,27 @@
 /*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
 /* ----------------------------------------------------------------------------------------------------- */
 @import 'ngx-toastr/toastr';
+
+.toast-container .ngx-toastr {
+  border-radius: 10px;
+  box-shadow: none;
+}
+
+#toast-container>.toast-error {
+  background-color: rgb(220, 38, 38);
+  color: #fff;
+  box-shadow: none;
+}
+
+#toast-container>.toast-success {
+  background-color: rgb(22, 163, 74);
+  color: #fff;
+  box-shadow: none;
+}
+
+#toast-container>.toast-warning {
+  background-color: rgba(245, 158, 11,1);
+  color: #fff;
+  box-shadow: none;
+}
+

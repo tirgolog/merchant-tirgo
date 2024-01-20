@@ -1,8 +1,8 @@
 import { Route } from '@angular/router';
 import { initialDataResolver } from 'app/app.resolvers';
-import { AuthGuard } from 'app/core/auth/guards/auth.guard';
-import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
-import { LayoutComponent } from 'app/layout/layout.component';
+import { AuthGuard } from 'app/shared/guards/auth.guard';
+import { NoAuthGuard } from 'app/shared/guards/noAuth.guard';
+import { LayoutComponent } from './shared/layouts/layout/layout.component';
 
 export const appRoutes: Route[] = [
     { path: '', pathMatch: 'full', redirectTo: 'dashboards' },
@@ -17,7 +17,8 @@ export const appRoutes: Route[] = [
             { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes') },
             { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes') },
             { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes') },
-            { path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes') }
+            { path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes') },
+            { path: 'verify-phone', loadChildren: () => import('app/modules/auth/verify-phone/verify-phone.routes') }
         ]
     },
     {
@@ -42,8 +43,10 @@ export const appRoutes: Route[] = [
             {
                 path: 'dashboards',  loadChildren: () => import('app/modules/dashboards/dashboard.resolver') 
             },
-            { path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/shared/components/error-404/error-404.routes') },
+            { path: '404-not-found', pathMatch: 'full', loadChildren: () => import('app/modules/errors/error-404/error-404.routes') },
             { path: '**', redirectTo: '404-not-found' }
         ]
     }
 ];
+
+

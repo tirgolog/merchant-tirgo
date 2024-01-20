@@ -10,8 +10,8 @@ import { EmptyLayoutComponent } from './layouts/empty/empty.component';
 
 
 import { DenseLayoutComponent } from './layouts/dense/dense.component';
-import { AuthService } from 'app/core/auth/auth.service';
-import { SettingsComponent } from 'app/shared/components/common/settings/settings.component';
+import { AuthService } from 'app/modules/auth/auth.service';
+import { SettingsComponent } from '../settings/settings.component';
 
 
 @Component({

@@ -1,0 +1,16 @@
+<div class="font-bold text-3xl flex justify-center">ПОДТВЕРЖДЕНИЕ</div>
+<mat-dialog-content class="mat-typography">
+    <div>Введите 6 значный код отправлен на номер </div>
+    <b class="text-black flex justify-center"> {{data.phone}}</b>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'">
+        <span>Отправить</span>
+        <!-- <mat-progress-spinner *ngIf="verifyPhoneForm.disabled" [diameter]="24"
+      [mode]="'indeterminate'"></mat-progress-spinner> -->
+    </button>
+
+    <div class="inline-flex items-center justify-between w-full mt-4">
+        <a class="text-md font-medium m-auto cursor-pointer">Запросить еще раз</a>
+    </div>
+</mat-dialog-actions>

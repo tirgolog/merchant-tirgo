@@ -12,6 +12,8 @@ export class OfflineInterceptor implements HttpInterceptor {
   constructor() { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler) {
+    console.log('OfflineInterceptor is executing.');
+
     // Check if the device is offline
     if (!navigator.onLine) {
       // Handle offline mode (e.g., store requests for later)
