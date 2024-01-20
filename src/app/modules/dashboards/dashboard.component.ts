@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
+import { DashboardService } from './services/dashboard.service';
 
 
 @Component({
@@ -33,26 +34,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedProject: string = 'ACME Corp. Backend App';
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  /**
-   * Constructor
-   */
   constructor(
     private _router: Router,
+    private dashboardService: DashboardService
   ) {
   }
 
-  // -----------------------------------------------------------------------------------------------------
-  // @ Lifecycle hooks
-  // -----------------------------------------------------------------------------------------------------
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
-    // Get the data
-
-
-    // Attach SVG fill fixer to all ApexCharts
     window['Apex'] = {
       chart: {
         events: {

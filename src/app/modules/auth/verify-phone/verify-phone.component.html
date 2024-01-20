@@ -4,7 +4,7 @@
       <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight text-center">
         РЕГИСТРАЦИЯ</div>
 
-      <form [formGroup]="signUpForm" class="mt-8" #signInNgForm="ngForm">
+      <form [formGroup]="verifyPhoneForm" class="mt-8" #verifyPhoneNgForm="ngForm">
 
         <div class="form-width">
           <mat-form-field class="w-full">
@@ -16,11 +16,11 @@
         </div>
 
         <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
-          [disabled]="signUpForm.disabled" (click)="signUp()">
-          <span *ngIf="!signUpForm.disabled">
+          [disabled]="verifyPhoneForm.disabled" (click)="verifyPhone()">
+          <span *ngIf="!verifyPhoneForm.disabled">
             Отправить
           </span>
-          <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
+          <mat-progress-spinner *ngIf="verifyPhoneForm.disabled" [diameter]="24"
             [mode]="'indeterminate'"></mat-progress-spinner>
         </button>
 

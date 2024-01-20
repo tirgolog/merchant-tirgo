@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthUtils } from 'app/core/auth/auth.utils';
+import { AuthUtils } from 'app/modules/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  API_URL = 'https://merchant.tirgo.io/api/v1'
+
   public _authenticated: boolean = false;
 
   constructor(
@@ -21,15 +23,6 @@ export class AuthService {
   get accessToken(): string {
     return localStorage.getItem('merchant') ?? '';
   }
-
-  forgotPassword(email: string): Observable<any> {
-    return this.http.post('api/auth/forgot-password', email);
-  }
-
-  resetPassword(password: string): Observable<any> {
-    return this.http.post('api/auth/reset-password', password);
-  }
-
   signIn(credentials: { email: string; password: string }): Observable<any> {
     // Throw error, if the user is already logged in
     if (this._authenticated) {
@@ -52,10 +45,17 @@ export class AuthService {
       }),
     );
   }
+  verifyPhone(data) {
+    return this.http.post(this.API_URL+'/users/phone-verify', data);
+  }
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post('api/auth/forgot-password', email);
+  }
 
-  /**
-   * Sign in using the access token
-   */
+  resetPassword(password: string): Observable<any> {
+    return this.http.post('api/auth/reset-password', password);
+  }
+
   signInUsingToken(): Observable<any> {
     // Sign in using the token
     return this.http.post('api/auth/sign-in-with-token', {
@@ -90,9 +90,6 @@ export class AuthService {
     );
   }
 
-  /**
-   * Sign out
-   */
   signOut(): Observable<any> {
     // Remove the access token from the local storage
     localStorage.removeItem('merchant');
@@ -104,27 +101,14 @@ export class AuthService {
     return of(true);
   }
 
-  /**
-   * Sign up
-   *
-   * @param user
-   */
   signUp(user: { name: string; email: string; password: string; company: string }): Observable<any> {
     return this.http.post('api/auth/sign-up', user);
   }
 
-  /**
-   * Unlock session
-   *
-   * @param credentials
-   */
   unlockSession(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post('api/auth/unlock-session', credentials);
   }
 
-  /**
-   * Check the authentication status
-   */
   check(): Observable<boolean> {
     // Check if the user is logged in
     if (this._authenticated) {

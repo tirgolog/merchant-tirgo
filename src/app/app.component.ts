@@ -1,19 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-    selector   : 'app-root',
+    selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls  : ['./app.component.scss'],
-    standalone : true,
-    imports    : [RouterOutlet],
+    styleUrls: ['./app.component.scss'],
+    standalone: true,
+    imports: [RouterOutlet,],
+    providers: []
 })
-export class AppComponent
-{
-    /**
-     * Constructor
-     */
-    constructor()
-    {
+export class AppComponent implements OnInit {
+    constructor() {}
+
+    ngOnInit(): void {
+      
     }
 }
