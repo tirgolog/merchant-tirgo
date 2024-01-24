@@ -12,6 +12,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { ApexOptions, NgApexchartsModule } from 'ng-apexcharts';
 import { Subject, takeUntil } from 'rxjs';
 import { DashboardService } from './services/dashboard.service';
+import { UserService } from 'app/shared/services/user/user.service';
 
 
 @Component({
@@ -36,11 +37,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private _router: Router,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private userService: UserService,
   ) {
   }
 
   ngOnInit(): void {
+    console.log(this.userService.curUser);
+    
+    
     window['Apex'] = {
       chart: {
         events: {

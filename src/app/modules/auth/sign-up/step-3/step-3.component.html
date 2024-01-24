@@ -1,0 +1,99 @@
+<div class="flex justify-center items-center h-full w-full">
+  <div class="login-contianer">
+    <div class="mt-2 p-8 login-card ">
+      <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+        РЕГИСТРАЦИЯ
+      </div>
+      <!-- <mat-stepper [linear]="true" #stepper>
+            <mat-step [stepControl]="firstFormGroup">  </mat-step>
+            <mat-step [stepControl]="secondFormGroup"> </mat-step>
+            <mat-step></mat-step>
+          </mat-stepper> -->
+      <form [formGroup]="signUpForm" class="mt-8 w-full" #signInNgForm="ngForm">
+        <div class="flex items-center w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>Наименование банка</mat-label>
+            <input matInput [formControlName]="'bankName'" />
+          </mat-form-field>
+
+          <div class="flex w-full">
+            <mat-form-field class="flex-auto">
+              <mat-label>Расчетный счет</mat-label>
+              <input matInput formControlName="bankAccount" type="text" mask="99999999999999999999">
+              <mat-select formControlName="currency" matPrefix>
+                <mat-option *ngFor="let item of currencies" [value]="item.id">{{item.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="flex w-full" *ngIf="showBankAccount2">
+            <mat-form-field class="flex-auto">
+              <mat-label>Расчетный счет</mat-label>
+              <input matInput formControlName="bankAccount2" type="text" mask="99999999999999999999">
+              <mat-select formControlName="currency2" matPrefix>
+                <mat-option *ngFor="let item of currencies" [value]="item.id">{{item.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <button class="fuse-mat-button-large dark" mat-flat-button (click)="toggleShowBankAccount2()">
+            <mat-icon>{{ showTrashIcon ? 'delete' : 'add' }}</mat-icon>
+          </button>
+        </div>
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>ИНН</mat-label>
+            <input matInput [formControlName]="'inn'" type="text" mask="999999999"/>
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>Код плательщика НДС</mat-label>
+            <input matInput [formControlName]="'taxPayerCode'" />
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>ОКЭД</mat-label>
+            <input matInput [formControlName]="'oked'" type="text" mask="99999"/>
+          </mat-form-field>
+        </div>
+
+        <div class="flex w-full gap-2">
+          <mat-form-field class="w-full">
+            <mat-label>МФО</mat-label>
+            <input matInput [formControlName]="'mfo'" type="text" mask="99999"/>
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>DUNS номер</mat-label>
+            <input matInput [formControlName]="'dunsNumber'" type="text" mask="999999999"/>
+          </mat-form-field>
+
+          <mat-form-field class="w-full">
+            <mat-label>IBAN номер</mat-label>
+            <input matInput [formControlName]="'ibanNumber'" type="text" mask="999999999999999999"/>
+          </mat-form-field>
+        </div>
+
+        <div class="flex w-full gap-2">
+
+          <mat-form-field class="w-full">
+            <mat-label>Заметки</mat-label>
+            <input matInput [formControlName]="'notes'" />
+          </mat-form-field>
+        </div>
+
+        <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
+          [disabled]="signUpForm.disabled || !signUpForm.value.agreement" (click)="signUp()">
+          <span *ngIf="!signUpForm.disabled">
+            Сохранить
+          </span>
+          <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
+            [mode]="'indeterminate'"></mat-progress-spinner>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

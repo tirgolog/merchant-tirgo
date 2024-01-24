@@ -39,29 +39,27 @@ export class AuthVerifyPhoneComponent implements OnInit {
 
   ngOnInit() {
     this.verifyPhoneForm = this.formBuilder.group({
-      phone: ['+998977243312', [Validators.required]],
+      phone: ['', [Validators.required]],
       countryCode: ['uz', [Validators.required]]
     });
   }
 
   verifyPhone() {
     if (!this.verifyPhoneForm.value.phone) {
-      this.toastr.error('Введите номер телефона', 'Ошибка');
+      this.toastr.error('Введите номер телефона');
     }
     else {
       this.verifyPhoneForm.patchValue({
         countryCode: this.phone.selectedCountry.iso2
       });
       this.verifyPhoneForm.disable();
-      this.showVerifyCode('');
-      // this.authService.verifyPhone(this.verifyPhoneForm.value)
-      //   .subscribe(
-      //     (response:any) => {
-      //       this.showVerifyCode(response.data)
-      //       this.verifyPhoneForm.enable();
-      //       this.verifyPhoneNgForm.resetForm();
-      //     },
-      //   );
+      this.authService.verifyPhone(this.verifyPhoneForm.value)
+        .subscribe(
+          (response:any) => {
+            this.showVerifyCode(response.data)
+            this.verifyPhoneForm.enable();
+          },
+        );
     }
   }
 
@@ -72,7 +70,7 @@ export class AuthVerifyPhoneComponent implements OnInit {
       data: {
         countryCode: this.phone.selectedCountry.iso2,
         phone: this.verifyPhoneForm.value.phone,
-        code: '000000' //data.code
+        code: data.code
       }
     });
     dialogRef.afterClosed().subscribe(result => {

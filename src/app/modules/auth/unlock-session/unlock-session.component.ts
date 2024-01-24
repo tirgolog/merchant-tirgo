@@ -10,7 +10,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/modules/auth/auth.service';
-import { UserService } from 'app/core/user/user.service';
+import { UserService } from 'app/shared/services/user/user.service';
 
 @Component({
     selector     : 'auth-unlock-session',

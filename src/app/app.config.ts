@@ -11,14 +11,29 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { provideTransloco } from 'app/core/transloco/transloco.provider';
 import { mockApiServices } from './core/mock-api';
 import { provideToastr } from 'ngx-toastr';
-import { CodeInputModule } from 'angular-code-input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UserService } from './shared/services/user/user.service';
+import { provideInitialize } from './shared/interceptors/initialize.provider';
+import { ErrorInterceptorService } from './shared/interceptors/error-interceptor';
+import { OfflineInterceptor } from './shared/interceptors/offline-interceptor';
+import { RetryInterceptor } from './shared/interceptors/retry-interceptor';
+import { provideNgxMask } from 'ngx-mask';
+import { AuthService } from './modules/auth/auth.service';
+import { AlertService } from './shared/services/alert.service';
+import { CommonModule } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        RetryInterceptor,
+        OfflineInterceptor,
+        ErrorInterceptorService,
+        UserService,
+        AlertService,
         ReactiveFormsModule,
         provideAnimations(),
         provideHttpClient(),
+        provideInitialize(),
+        provideNgxMask(),
         provideToastr({
             timeOut: 10000,
             closeButton: true,

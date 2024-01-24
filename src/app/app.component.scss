@@ -4,3 +4,23 @@
     width: 100%;
     height: 100%;
 }
+
+.alert {
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  }
+  
+  .alert-success {
+    background-color: #4caf50;
+  }
+  
+  .alert-error {
+    background-color: #f44336;
+  }
+  
+  .alert-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }

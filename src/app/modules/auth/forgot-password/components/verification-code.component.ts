@@ -1,7 +1,7 @@
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, ViewEncapsulation, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
@@ -18,57 +18,44 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   selector: 'verification-code',
   templateUrl: './verification-code.component.html',
   styleUrls: ['./verification-code.component.scss'],
+  host: { 'class': 'verification-code-forgot' },
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [CodeInputModule, RouterLink, NgIf, MatProgressSpinnerModule, MatButtonModule, MatIconModule, ReactiveFormsModule, FormsModule, TextFieldModule, NgFor, MatCheckboxModule, NgClass, MatRippleModule, MatMenuModule, MatDialogModule, AsyncPipe],
 })
-export class VerificationCodeComponent implements OnInit {
+export class VerificationCodeForgotComponent implements OnInit {
   authService = inject(AuthService);
   toastr = inject(ToastrService);
   loading: boolean = false;
   countdown: number = 119;
   intervalId: any;
   count;
-  smsCode: string;
   verifyCode: string;
   isCodeExpired: boolean = false;
   codeEntered: boolean = false;
+  email: string = '';
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private cdr: ChangeDetectorRef,
-    private dialogRef: MatDialogRef<VerificationCodeComponent>,
+    private dialogRef: MatDialogRef<VerificationCodeForgotComponent>,
     private router: Router
   ) {
   }
 
   ngOnInit(): void {
-    this.smsCode = this.data.code;
+    this.email = this.data.email;
     this.startCountdown();
   }
   sendVerifyedCode() {
-    this.loading = true;
-    if (this.isCodeExpired) {
-      this.loading = false;
-      this.toastr.error('Срок действия SMS-кода истек. Пожалуйста, запросите новый.');
-      this.dialogRef.close();
-    }
-    else if (this.smsCode !== this.verifyCode) {
-      this.loading = false;
-      this.toastr.error('Пароль не совпадает');
-    }
-    else if (this.smsCode == this.verifyCode) {
-      this.dialogRef.close();
-      this.router.navigate(['auth/sign-up/step1'], { queryParams: { phone: this.data.phone } });
-    }
+    this.onCodeCompleted(this.verifyCode)
   }
   retrySms() {
     this.loading = true;
-    this.authService.verifyPhone({ phone: this.data.phone, countryCode: this.data.countryCode })
+    this.authService.sendEmail({ email: this.email })
       .subscribe(
         (response: any) => {
           if (response.success) {
-            this.smsCode = response.data.code;
             this.loading = false;
             this.isCodeExpired = false;
             this.countdown = 119;
@@ -105,7 +92,24 @@ export class VerificationCodeComponent implements OnInit {
     this.verifyCode = code;
   }
   onCodeCompleted(code: string) {
-      this.sendVerifyedCode();
+    this.verifyCode = code;
+    if (this.codeEntered && !this.isCodeExpired) {
+      this.authService.verifyCode({ email: this.email, code: +code }).subscribe((res: any) => {
+        if (res.success) {
+          this.loading = false;
+          console.log(this.email);
+          this.router.navigate(['auth/reset-password'], { queryParams: { email: this.email } });
+          this.dialogRef.close();
+        }
+        else if (res.errors[0] == 'Code is Invalid') {
+          this.loading = false;
+          this.toastr.error('Пароль не совпадает');
+        }
+      })
+    }
+    else if (this.isCodeExpired) {
+      this.loading = false;
+      this.toastr.error('Срок действия SMS-кода истек. Пожалуйста, запросите новый.');
+    }
   }
-
 }

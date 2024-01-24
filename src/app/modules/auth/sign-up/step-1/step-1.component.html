@@ -1,0 +1,85 @@
+<div class="flex justify-center items-center h-full w-full">
+    <div class="login-contianer">
+      <div class="mt-2 p-8 login-card ">
+        <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          РЕГИСТРАЦИЯ
+        </div>
+        <!-- <mat-stepper [linear]="true" #stepper>
+          <mat-step [stepControl]="firstFormGroup">  </mat-step>
+          <mat-step [stepControl]="secondFormGroup"> </mat-step>
+          <mat-step></mat-step>
+        </mat-stepper> -->
+        <form [formGroup]="signUpForm" class="mt-8" #signInNgForm="ngForm">
+          
+          <div class="flex">
+            <mat-form-field [ngClass]="formFieldHelpers" class="flex-auto">
+              <mat-label>Наименование фирмы</mat-label>
+              <input matInput formControlName="companyName">
+              <mat-select formControlName="companyType" [value]="'ООО'" matPrefix>
+                <mat-option value="ООО">ООО</mat-option>
+                <mat-option value="ИП">ИП</mat-option>
+                <mat-option value="АО">АО</mat-option>
+                <mat-option value="ОАО">ОАО</mat-option>
+                <mat-option value="ЗАО">ЗАО</mat-option>
+                <mat-option value="АК">АК</mat-option>
+                <mat-option value="ПК">ПК</mat-option>
+                <mat-option value="НКО">НКО</mat-option>
+                <mat-option value="ПК">ПК</mat-option>
+                <mat-option value="ГП">ГП</mat-option>
+                <mat-option value="МП">МП</mat-option>
+                <mat-option value="УП">УП</mat-option>
+                <mat-option value="ГУП">ГУП</mat-option>
+                <mat-option value="' '">Другой</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+  
+          <mat-form-field class="w-full">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" required />
+          </mat-form-field>
+  
+          <mat-form-field class="w-full">
+            <mat-label>Пароль</mat-label>
+            <input matInput type="password" [formControlName]="'password'" #passwordField>
+            <button mat-icon-button type="button"
+              (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
+              matSuffix>
+              <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'password'"
+                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+              <mat-icon class="icon-size-5" *ngIf="passwordField.type === 'text'"
+                [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <mat-form-field class="w-full">
+            <mat-label>Подтвердите пароль</mat-label>
+            <input matInput type="password" [formControlName]="'confirmPassword'" required #confirmPassword>
+            <button mat-icon-button type="button"
+              (click)="confirmPassword.type === 'password' ? confirmPassword.type = 'text' : confirmPassword.type = 'password'"
+              matSuffix>
+              <mat-icon class="icon-size-5" *ngIf="confirmPassword.type === 'password'"
+                [svgIcon]="'heroicons_solid:eye'"></mat-icon>
+              <mat-icon class="icon-size-5" *ngIf="confirmPassword.type === 'text'"
+                [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
+            </button>
+          </mat-form-field>
+  
+          <div class="flex items-center">
+            <mat-checkbox [formControlName]="'agreement'">Я принимаю</mat-checkbox>
+            <a class="underline font-bold" href="#">пользовательское соглашение</a>
+          </div>
+  
+          <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
+            [disabled]="signUpForm.disabled || !signUpForm.value.agreement" (click)="signUp()">
+            <span *ngIf="!signUpForm.disabled">
+              Сохранить
+            </span>
+            <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24"
+              [mode]="'indeterminate'"></mat-progress-spinner>
+          </button>
+  
+        </form>
+      </div>
+    </div>
+  </div>

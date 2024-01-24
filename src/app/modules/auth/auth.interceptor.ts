@@ -17,14 +17,10 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
 
     return next(newReq).pipe(
         catchError((error) => {
-
             if (error instanceof HttpErrorResponse && error.status === 401) {
-               
                 authService.signOut();
-
                 location.reload();
             }
-
             return throwError(error);
         }),
     );
