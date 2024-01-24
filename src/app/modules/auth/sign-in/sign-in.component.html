@@ -7,11 +7,11 @@
             <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <mat-form-field class="w-full">
                     <mat-label>Электронный адрес</mat-label>
-                    <input id="email" matInput [formControlName]="'email'">
-                    <mat-error *ngIf="signInForm.get('email').hasError('required')">
+                    <input id="username" matInput [formControlName]="'username'">
+                    <mat-error *ngIf="signInForm.get('username').hasError('required')">
                         Требуется адрес электронной почты
                     </mat-error>
-                    <mat-error *ngIf="signInForm.get('email').hasError('email')">
+                    <mat-error *ngIf="signInForm.get('username').hasError('username')">
                         Пожалуйста, введите действительный адрес электронной почты
                     </mat-error>
                 </mat-form-field>
@@ -32,7 +32,7 @@
                 </mat-form-field>
                 <div class="inline-flex items-center justify-between w-full mt-1.5">
                     <a class="text-md font-medium text-dark ml-auto"
-                        [routerLink]="['/forgot-password']">Забыли пароль?
+                        [routerLink]="['/auth/forgot-password']">Забыли пароль?
                     </a>
                 </div>
                 <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"

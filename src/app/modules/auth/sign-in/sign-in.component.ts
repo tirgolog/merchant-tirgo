@@ -9,8 +9,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
-import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
+import { FuseAlertComponent } from '@fuse/components/alert';
 import { AuthService } from 'app/modules/auth/auth.service';
+import { UserService } from 'app/shared/services/user/user.service';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'auth-sign-in',
@@ -25,25 +27,21 @@ import { AuthService } from 'app/modules/auth/auth.service';
 export class AuthSignInComponent implements OnInit {
   @ViewChild('signInNgForm') signInNgForm: NgForm;
 
-  alert: { type: FuseAlertType; message: string } = {
-    type: 'success',
-    message: '',
-  };
   signInForm: UntypedFormGroup;
-  showAlert: boolean = false;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _authService: AuthService,
-    private _formBuilder: UntypedFormBuilder,
-    private _router: Router,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private userService: UserService,
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
   ) {
   }
 
   ngOnInit() {
-    this.signInForm = this._formBuilder.group({
-      email: ['hughes.brian@company.com', [Validators.required, Validators.email]],
-      password: ['admin', Validators.required],
+    this.signInForm = this.formBuilder.group({
+      username: ['merchant@gmail.com', [Validators.required, Validators.email]],
+      password: ['123', Validators.required],
     });
   }
 
@@ -52,31 +50,28 @@ export class AuthSignInComponent implements OnInit {
       return;
     }
     this.signInForm.disable();
-    this.showAlert = false;
-    this._authService.signIn(this.signInForm.value)
-      .subscribe(
-        () => {
-          // Set the redirect url.
-          // The '/signed-in-redirect' is a dummy url to catch the request and redirect the user
-          // to the correct page after a successful sign in. This way, that url can be set via
-          // routing file and we don't have to touch here.
-          const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-          // Navigate to the redirect url
-          this._router.navigateByUrl(redirectURL);
-        },
-        (response) => {
-          // Re-enable the form
-          this.signInForm.enable();
-          // Reset the form
-          this.signInNgForm.resetForm();
-          // Set the alert
-          this.alert = {
-            type: 'error',
-            message: 'Wrong email or password',
-          };
-          // Show the alert
-          this.showAlert = true;
-        },
-      );
+    this.authService.signIn(this.signInForm.value).subscribe(
+      (response) => {
+        this.signInForm.enable();
+        if (response.success) {
+          if (localStorage.getItem("merchant")) {
+            let curUser: any = jwtDecode(localStorage.getItem("merchant"));
+            this.authService.getMerchantById(curUser.merchantId).subscribe(
+              (res: any) => {
+                if (res.success) {
+                  this.userService.user = res.data;
+                  if (this.userService._user.value.completed && this.userService._user.value.verified) {
+                    this.authService._authenticated = true;
+                    this.router.navigate(['dashboards']);
+                  } else if (!this.userService._user.value.completed || !this.userService._user.value.verified) {
+                    this.router.navigate(['auth/sign-up/step2']);
+                  }
+                }
+              },
+            );
+          }
+        }
+      });
   }
+
 }

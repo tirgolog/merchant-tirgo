@@ -5,4 +5,6 @@ export interface User
     email: string;
     avatar?: string;
     status?: string;
+    completed: string;
+    verified: string;
 }
