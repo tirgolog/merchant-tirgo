@@ -63,7 +63,10 @@ export class Step2Component implements OnInit {
     this.currentUser = jwtDecode(localStorage.getItem('merchant'));
     this.authService.getMerchantById(this.currentUser.merchantId).subscribe((res: any) => {
       if (res.success) {
-        this.merchant = res.data
+        this.merchant = res.data;
+        if (this.merchant.supervisorFirstName) {
+          this.router.navigate(['auth/sign-up/step3'])
+        }
       }
     })
 
@@ -94,43 +97,43 @@ export class Step2Component implements OnInit {
       password: this.merchant.password,
       email: this.merchant.email
     });
-    
-    if(this.signUpForm.value.supervisorFirstName === '') {
+
+    if (this.signUpForm.value.supervisorFirstName === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Имя руководителя');
     }
-    else if(this.signUpForm.value.supervisorLastName === '') {
+    else if (this.signUpForm.value.supervisorLastName === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Фамилия руководителя');
     }
-    else if(this.signUpForm.value.phoneNumber === '') {
+    else if (this.signUpForm.value.phoneNumber === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Телефон руководителя');
     }
-    else if(this.signUpForm.value.responsiblePersonFistName === '') {
+    else if (this.signUpForm.value.responsiblePersonFistName === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Имя ответственного лица');
     }
-    else if(this.signUpForm.value.responsiblePersonLastName === '') {
+    else if (this.signUpForm.value.responsiblePersonLastName === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Фамилия ответственного лица');
     }
-    else if(this.signUpForm.value.responsbilePersonPhoneNumber === '') {
+    else if (this.signUpForm.value.responsbilePersonPhoneNumber === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Телефон ответственного лица');
     }
-    else if(this.signUpForm.value.address === '') {
+    else if (this.signUpForm.value.address === '') {
       this.signUpForm.enable();
       this.toastr.error('Требуется указать Юридический адрес');
     }
     else {
-      this.authService.merchantUpdate(this.signUpForm.value).subscribe((res:any) => {
-        if(res.success) {
+      this.authService.merchantUpdate(this.signUpForm.value).subscribe((res: any) => {
+        if (res.success) {
           this.signUpForm.enable();
           this.router.navigate(['auth/sign-up/step3']);
         }
-        
-      },error => {
+
+      }, error => {
         this.signUpForm.enable();
         this.toastr.error(error.message);
       })

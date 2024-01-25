@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthUtils } from 'app/modules/auth/auth.utils';
 import { UserService } from 'app/shared/services/user/user.service';
-import { jwtDecode } from 'jwt-decode';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +24,7 @@ export class AuthService {
   merchantCreate(data) {
     return this.http.post(this.API_URL + '/merchant', data);
   }
-  MerchantComplete(data) {
+  merchantComplete(data) {
     return this.http.post(this.API_URL + '/merchant', data);
   }
   merchantUpdate(data) {
@@ -43,6 +42,7 @@ export class AuthService {
     }
     return this.http.post(this.API_URL + '/auth/login', credentials).pipe(
       switchMap((response: any) => {
+        this._authenticated = true
         this.accessToken = response.data.access_token;
         return of(response);
       }),
@@ -93,13 +93,10 @@ export class AuthService {
     return this.http.get(this.API_URL + '/currency/all');
   }
   signInUsingToken(): Observable<any> {
-    // Sign in using the token
     return this.http.post('api/auth/sign-in-with-token', {
       accessToken: this.accessToken,
     }).pipe(
       catchError(() =>
-
-        // Return false
         of(false),
       ),
       switchMap((response: any) => {

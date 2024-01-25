@@ -1,10 +1,10 @@
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthService } from 'app/modules/auth/auth.service';
 import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, inject } from '@angular/core';
 import { CommonModule, NgClass, NgIf } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +17,8 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { jwtDecode } from 'jwt-decode';
 import { AlertService } from 'app/shared/services/alert.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from 'app/shared/services/user/user.service';
 
 @Component({
   selector: 'auth-step-3',
@@ -29,6 +31,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [MatSnackBarModule, NgxMaskDirective, MatStepperModule, CommonModule, MatCheckboxModule, MatIconModule, NgClass, MatSelectModule, RouterLink, NgIf, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule, NgxMatIntlTelInputComponent],
 })
 export class Step3Component implements OnInit {
+  toastr = inject(ToastrService);
+  user = inject(UserService);
   @ViewChild('signUpNgForm') signUpNgForm: NgForm;
   signUpForm: FormGroup;
   merchant: any;
@@ -38,11 +42,12 @@ export class Step3Component implements OnInit {
   showBankAccount2: boolean = false;
   showTrashIcon: boolean = false;
   currentUser: any;
-
+  completed: boolean = false;
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -50,6 +55,9 @@ export class Step3Component implements OnInit {
     this.authService.getMerchantById(this.currentUser.merchantId).subscribe((res: any) => {
       if (res.success) {
         this.merchant = res.data;
+        if (this.merchant.completed && (!this.merchant.verified && !this.merchant.rejected)) {
+          this.completed = true;
+        }
       }
     })
 
@@ -78,6 +86,44 @@ export class Step3Component implements OnInit {
 
   signUp() {
     this.signUpForm.disable();
+    // if (this.signUpForm.value.bankName === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать Наименование банка');
+    // }
+    // else if (this.signUpForm.value.bankAccount === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать Расчетный счет');
+    // }
+    // else if (this.signUpForm.value.inn === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать ИНН');
+    // }
+    // else if (this.signUpForm.value.taxPayerCode === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать Код плательщика НДС');
+    // }
+    // else if (this.signUpForm.value.oked === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать Код плательщика ОКЭД');
+    // }
+    // else if (this.signUpForm.value.mfo === '') {
+    //   this.signUpForm.enable();
+    //   this.toastr.error('Требуется указать Код плательщика МФО');
+    // }
+    // else {
+    this.alertService.showAlert('Your message', 'check_circle_outline', 'success')
+    this.signUpForm.enable();
+    // this.authService.merchantComplete(this.signUpForm.value).subscribe((res: any) => {
+    //   if (res.success) {
+    //     this.completed = true;
+    //     this.signUpForm.enable();
+    //     this.alertService.showAlert('Your message', 'check_circle_outline', 'success')
+    //   }
+    // }, error => {
+    //   this.signUpForm.enable();
+    //   this.toastr.error(error.message);
+    // })
+    // }
   }
 
   toggleShowBankAccount2() {

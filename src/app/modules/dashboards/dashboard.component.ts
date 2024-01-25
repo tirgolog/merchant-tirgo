@@ -43,9 +43,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.userService.curUser);
-    
-    
     window['Apex'] = {
       chart: {
         events: {

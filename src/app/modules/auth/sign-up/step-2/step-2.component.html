@@ -1,15 +1,21 @@
 <div class="flex justify-center items-center h-full w-full">
   <div class="login-contianer">
     <div class="mt-2 p-8 login-card ">
-      <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight">
-        РЕГИСТРАЦИЯ
+      
+      <div class="flex justify-between items-center">
+        <div class="text-5xl md:text-4xl sm:text-3xl font-extrabold tracking-tight leading-tight">
+          РЕГИСТРАЦИЯ
+        </div>
+  
+        <div class="flex items-center gap-1">
+          <div class="stepper-item active"><span>1</span></div>
+          <mat-icon class="step-arrow-active" svgIcon="heroicons_outline:arrow-long-right"></mat-icon>
+          <div class="stepper-item active"><span>2</span></div>
+          <mat-icon class="step-arrow" svgIcon="heroicons_outline:arrow-long-right"></mat-icon>
+          <div class="stepper-item"><span>3</span></div>
+        </div>
       </div>
-
-      <!-- <mat-stepper [linear]="true" #stepper>
-          <mat-step [stepControl]="firstFormGroup">  </mat-step>
-          <mat-step [stepControl]="secondFormGroup"> </mat-step>
-          <mat-step></mat-step>
-        </mat-stepper> -->
+      
       <form [formGroup]="signUpForm" class="mt-8 w-full" #signInNgForm="ngForm">
 
         <div class="flex w-full gap-2">
@@ -141,7 +147,7 @@
           </div>
         </div>
 
-        <button class="fuse-mat-button-large dark w-full mt-6" mat-flat-button [color]="'primary'"
+        <button class="fuse-mat-button-large dark w-full mt-10" mat-flat-button [color]="'primary'"
           [disabled]="signUpForm.disabled" (click)="signUp()">
           <span *ngIf="!signUpForm.disabled">
             Продалжить

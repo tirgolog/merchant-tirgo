@@ -14,6 +14,7 @@ import { NgxMatIntlTelInputComponent } from 'ngx-mat-intl-tel-input';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { ToastrService } from 'ngx-toastr';
+import { jwtDecode } from 'jwt-decode';
 
 @Component({
   selector: 'auth-step-1',
@@ -31,9 +32,10 @@ export class Step1Component implements OnInit {
   signUpForm: FormGroup;
   phone: string;
   formFieldHelpers: string[] = [''];
+  currentUser: any;
+  merchant:any;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -41,9 +43,15 @@ export class Step1Component implements OnInit {
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe(params => {
-      this.phone = params['phone'];
-    });
+    this.currentUser = jwtDecode(localStorage.getItem('merchant'));
+    this.authService.getMerchantById(this.currentUser.merchantId).subscribe((res: any) => {
+      if (res.success) {
+        this.merchant = res.data;
+        if(this.merchant.email) {
+          this.router.navigate(['auth/sign-up/step2'])
+        } 
+      }
+    })
     this.signUpForm = this.formBuilder.group({
       companyType: ['ООО', Validators.required],
       companyName: ['', [Validators.required]],
@@ -53,6 +61,7 @@ export class Step1Component implements OnInit {
       phoneNumber: [this.phone],
       agreement: [false],
     });
+    
   }
 
   signUp() {
@@ -89,13 +98,13 @@ export class Step1Component implements OnInit {
     else {
       this.signUpForm.enable();
       this.authService.merchantCreate(this.signUpForm.value).subscribe((res: any) => {
-        if(res.success) {
+        if (res.success) {
           this.signUpForm.enable();
           this.router.navigate(['auth/sign-up/step2']);
           this.toastr.success("Мерчант успешно добавлен");
         }
-      },error => {
-        if(error.error.message == "email must be an email") {
+      }, error => {
+        if (error.error.message == "email must be an email") {
           this.signUpForm.enable();
           this.toastr.error('Неверный формат электронной почты');
         }
